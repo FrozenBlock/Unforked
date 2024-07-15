@@ -210,6 +210,8 @@ dependencies {
     } else {
         modImplementation("maven.modrinth:frozenlib:${frozenlib_version}")?.let { include(it) }
     }
+
+    compileOnly("org.projectlombok:lombok:1.18.34")?.let { annotationProcessor(it) }
 }
 
 tasks {

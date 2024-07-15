@@ -29,6 +29,9 @@
       "net.frozenblock.unforked.datagen.UnforkedDataGenerator"
     ]
   },
+  "languageAdapters": {
+    "unforked": "net.frozenblock.unforked.UnforkedLanguageAdapter"
+  },
   "mixins": [
     "unforked.mixins.json"
   ],
