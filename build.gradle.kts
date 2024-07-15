@@ -4,6 +4,7 @@ import com.matthewprenger.cursegradle.CurseProject
 import com.matthewprenger.cursegradle.CurseRelation
 import com.modrinth.minotaur.ModrinthExtension
 import groovy.xml.XmlSlurper
+import net.fabricmc.loom.util.gradle.SourceSetHelper
 import org.ajoberstar.grgit.Grgit
 import org.codehaus.groovy.runtime.ResourceGroovyMethods
 import java.io.FileInputStream
@@ -13,6 +14,7 @@ import org.kohsuke.github.GHReleaseBuilder
 import org.kohsuke.github.GitHub
 import java.io.FileNotFoundException
 import java.net.URL
+import java.util.stream.Collectors
 
 buildscript {
     repositories {
@@ -88,6 +90,18 @@ sourceSets {
 
 loom {
     runs {
+        // Credit for classpath groups: JustEnoughItems
+        val classPaths = sourceSets.main.get().output.classesDirs
+        val resourcesPaths = listOfNotNull(
+            sourceSets.main.get().output.resourcesDir
+        )
+        val classPathGroups = listOf(classPaths, resourcesPaths).flatten()
+        val classPathGroupsString = classPathGroups
+            .filterNotNull()
+            .joinToString(separator = File.pathSeparator) {
+                it.absoluteFile.toString()
+            }
+
         register("datagen") {
             client()
             name("Data Generation")
@@ -95,15 +109,20 @@ loom {
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
             //vmArg("-Dfabric-api.datagen.strict-validation")
             vmArg("-Dfabric-api.datagen.modid=$mod_id")
+            vmArgs("-Dfabric.classPathGroups=${classPathGroupsString}")
 
             ideConfigGenerated(true)
             runDir = "build/datagen"
         }
 
         named("client") {
+            vmArgs("-Dfabric.classPathGroups=${classPathGroupsString}")
+
             ideConfigGenerated(true)
         }
         named("server") {
+            vmArgs("-Dfabric.classPathGroups=${classPathGroupsString}")
+
             ideConfigGenerated(true)
         }
     }
