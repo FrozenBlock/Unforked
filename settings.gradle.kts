@@ -5,16 +5,8 @@ pluginManagement {
             setUrl("https://maven.quiltmc.org/repository/release/")
         }
         maven {
-            name = "Quilt Snapshot"
-            setUrl("https://maven.quiltmc.org/repository/snapshot/")
-        }
-        maven {
             name = "Fabric"
             setUrl("https://maven.fabricmc.net/")
-        }
-        maven {
-            name = "Forge"
-            setUrl("https://files.minecraftforge.net/maven/")
         }
         maven {
             name = "Jitpack"
@@ -25,7 +17,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Template Mod"
+rootProject.name = "Unforked"
 
 localRepository("FrozenLib", "maven.modrinth:frozenlib", true)
 

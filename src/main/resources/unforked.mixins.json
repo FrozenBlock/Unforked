@@ -1,8 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8.5",
-  "package": "net.frozenblock.template.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "package": "net.frozenblock.unforked.mixin",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
   "client": [

@@ -1,4 +1,4 @@
-package net.frozenblock.template.util;
+package net.frozenblock.unforked.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class TemplateModSharedConstants {
-	private TemplateModSharedConstants() {
-		throw new UnsupportedOperationException("TemplateModSharedConstants contains only static declarations.");
+public final class UnforkedConstants {
+	private UnforkedConstants() {
+		throw new UnsupportedOperationException("UnforkedConstants contains only static declarations.");
 	}
 
-	public static final String MOD_ID = "frozenblock_template_mod";
+	public static final String MOD_ID = "unforked";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static boolean DEV_LOGGING = false;
 	/**

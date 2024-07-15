@@ -1,4 +1,4 @@
-package net.frozenblock.template.util;
+package net.frozenblock.unforked.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -6,11 +6,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import java.util.HashMap;
 import java.util.Map;
-import static net.frozenblock.template.util.TemplateModSharedConstants.*;
+import static net.frozenblock.unforked.util.UnforkedConstants.*;
 
-public final class TemplateModUtils {
-	private TemplateModUtils() {
-		throw new UnsupportedOperationException("TemplateModUtils contains only static declarations.");
+public final class UnforkedUtils {
+	private UnforkedUtils() {
+		throw new UnsupportedOperationException("UnforkedUtils contains only static declarations.");
 	}
 
 	// LOGGING
@@ -63,11 +63,11 @@ public final class TemplateModUtils {
 	}
 
 	public static ResourceLocation id(String path) {
-		return new ResourceLocation(MOD_ID, path);
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 
 	public static ResourceLocation vanillaId(String path) {
-		return new ResourceLocation(ResourceLocation.DEFAULT_NAMESPACE, path);
+		return ResourceLocation.withDefaultNamespace(path);
 	}
 
 	public static String string(String path) {
