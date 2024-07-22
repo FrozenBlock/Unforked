@@ -220,7 +220,7 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
 
     // Fabric Language Kotlin. Required for Kotlin support.
-    modImplementation("net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}")
+    modApi("net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}")
 
     // FrozenLib
     println("Using local FrozenLib: $local_frozenlib")
@@ -331,11 +331,6 @@ fun getModVersion(): String {
     }
 
     return version
-}
-
-if (!(release == true || System.getenv("GITHUB_ACTIONS") == "true")) {
-    test.dependsOn(runDatagen)
-    runClient.dependsOn(runDatagen)
 }
 
 val env = System.getenv()

@@ -14,20 +14,9 @@ public class Unforked implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		UnforkedUtils.startMeasuring(this);
-		applyDataFixes(UnforkedConstants.MOD_CONTAINER);
 
 		UnforkedIntegrations.init();
 
 		UnforkedUtils.stopMeasuring(this);
-	}
-
-	private static void applyDataFixes(final @NotNull ModContainer mod) {
-		UnforkedUtils.log("Applying DataFixes for Unforked with Data Version " + UnforkedConstants.DATA_VERSION, true);
-
-		var builder = new QuiltDataFixerBuilder(UnforkedConstants.DATA_VERSION);
-		builder.addSchema(0, QuiltDataFixes.BASE_SCHEMA);
-
-		QuiltDataFixes.buildAndRegisterFixer(mod, builder);
-		UnforkedUtils.log("DataFixes for Unforked have been applied", true);
 	}
 }

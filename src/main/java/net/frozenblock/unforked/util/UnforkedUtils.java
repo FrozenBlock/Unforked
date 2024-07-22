@@ -1,9 +1,6 @@
 package net.frozenblock.unforked.util;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.Block;
 import java.util.HashMap;
 import java.util.Map;
 import static net.frozenblock.unforked.util.UnforkedConstants.*;
@@ -17,24 +14,6 @@ public final class UnforkedUtils {
 	public static void log(String string, boolean shouldLog) {
 		if (shouldLog) {
 			LOGGER.info(string);
-		}
-	}
-
-	public static void log(Entity entity, String string, boolean shouldLog) {
-		if (shouldLog) {
-			LOGGER.info(entity.toString() + " : " + string + " : " + entity.position());
-		}
-	}
-
-	public static void log(Block block, String string, boolean shouldLog) {
-		if (shouldLog) {
-			LOGGER.info(block.toString() + " : " + string + " : ");
-		}
-	}
-
-	public static void log(Block block, BlockPos pos, String string, boolean shouldLog) {
-		if (shouldLog) {
-			LOGGER.info(block.toString() + " : " + string + " : " + pos);
 		}
 	}
 
