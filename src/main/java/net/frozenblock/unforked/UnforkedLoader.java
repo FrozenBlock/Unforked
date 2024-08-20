@@ -3,17 +3,19 @@ package net.frozenblock.unforked;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
-import net.fabricmc.loader.impl.ModContainerImpl;
-import net.fabricmc.loader.impl.launch.FabricLauncherBase;
+import net.fabricmc.loader.impl.discovery.ModCandidateImpl;
+import net.fabricmc.loader.impl.discovery.RuntimeModRemapper;
 import net.fabricmc.loader.impl.metadata.DependencyOverrides;
 import net.fabricmc.loader.impl.metadata.LoaderModMetadata;
 import net.fabricmc.loader.impl.metadata.ModMetadataParser;
 import net.fabricmc.loader.impl.metadata.ParseMetadataException;
 import net.fabricmc.loader.impl.metadata.VersionOverrides;
+import net.fabricmc.loader.impl.util.SystemProperties;
 import net.frozenblock.unforked.util.QuiltMod;
 import org.jetbrains.annotations.ApiStatus;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import java.util.Set;
 public class UnforkedLoader {
 
 	private static final Set<QuiltMod> MODS = new HashSet<>();
+	public static final Set<ModCandidateImpl> QUILT_MODS = new HashSet<>();
+
 	private static final FabricLoaderImpl LOADER = FabricLoaderImpl.INSTANCE;
 
 	void init() {
@@ -62,11 +66,22 @@ public class UnforkedLoader {
 					new DependencyOverrides(FabricLoader.getInstance().getConfigDir()),
 					false
 				);
-				System.out.println(info.getAccessWidener());
-				FabricLoaderInterface.addMod(LOADER, FabricLoaderInterface.createPlain(mod.rootPath, info, true, new HashSet<>()));
-			} catch (IOException | ParseMetadataException e) {
+				QUILT_MODS.add(FabricLoaderInterface.createPlain(Path.of(mod.url.toURI()), info, true, new HashSet<>()));
+			} catch (IOException | ParseMetadataException | URISyntaxException e) {
 				throw new IllegalStateException(e);
 			}
+		}
+
+		// runtime mod remapping
+		Path cacheDir = FabricLoaderImpl.INSTANCE.getGameDir().resolve(".unforked");
+		Path outputDir = cacheDir.resolve("processedMods");
+
+		if (System.getProperty(SystemProperties.REMAP_CLASSPATH_FILE) != null) {
+			RuntimeModRemapper.remap(UnforkedLoader.QUILT_MODS, cacheDir.resolve("tmp"), outputDir);
+		}
+
+		for (ModCandidateImpl candidate : QUILT_MODS) {
+			FabricLoaderInterface.addMod(LOADER, candidate);
 		}
 	}
 }
