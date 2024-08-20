@@ -36,7 +36,6 @@ plugins {
     idea
     `java-library`
     java
-    kotlin("jvm") version("2.0.0")
 }
 
 val minecraft_version: String by project
@@ -51,7 +50,6 @@ val maven_group: String by project
 val archives_base_name: String by project
 
 val fabric_version: String by project
-val fabric_kotlin_version: String by project
 val fabric_asm_version: String by project
 val frozenlib_version: String by project
 
@@ -219,9 +217,6 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
 
-    // Fabric Language Kotlin. Required for Kotlin support.
-    modApi("net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}")
-
     // FrozenLib
     println("Using local FrozenLib: $local_frozenlib")
     if (local_frozenlib) {
@@ -239,7 +234,6 @@ tasks {
         properties["mod_id"] = mod_id
         properties["version"] = version
         properties["minecraft_version"] = minecraft_version
-        properties["fabric_kotlin_version"] = fabric_kotlin_version
 
         properties.forEach { (a, b) -> inputs.property(a, b) }
 
